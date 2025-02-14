@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Libros</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+        background-image: url('https://source.unsplash.com/1600x900/?books,library');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-color: #ffefd5; /* Fallback for older browsers */
+    }
+    .bg-custom-gradient {
+        background: linear-gradient(45deg, #ff6f61, #ff9966);
+    }
+    .text-custom {
+        color: #ff6f61;
+    }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@1.5.3/dist/flowbite.min.js"></script>
+</head>
+<body class="min-h-screen bg-gray-200 text-gray-900">
+<!-- NAVBAR -->
+<nav class="bg-custom-gradient shadow-md sticky top-0 z-50">
+  <div class="max-w-screen-xl mx-auto flex items-center justify-between p-4">
+    <a th:href="@{/}" class="flex items-center space-x-3">
+      <img src="https://img.freepik.com/vector-premium/vector-logotipo-cine-vector-pelicula-rollo-sobre-fondo-blanco_472355-306.jpg" class="h-10 rounded-full" alt="Logo Biblioteca" />
+      <span class="text-2xl font-bold text-white">책막스</span>
+    </a>
+    <div class="hidden md:flex space-x-6 text-lg">
+      <a th:href="@{/}" class="text-white font-semibold hover:text-yellow-300">Inicio</a>
+      <a th:href="@{/nosotros}" class="text-white hover:text-yellow-300">Nosotros</a>
+      <a th:href="@{/libros}" class="text-white hover:text-yellow-300">Libros</a>
+      <a th:href="@{/nuevoUsuario}" class="text-white hover:text-yellow-300">Usuarios</a>
+      <a th:href="@{/autores}" class="text-white hover:text-yellow-300">Autores</a>
+      <a th:href="@{/prestamo}" class="text-white hover:text-yellow-300">Préstamos</a>
+    </div>
+  </div>
+</nav>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+  <h2 class="text-4xl font-semibold text-center text-custom mb-8">Lista de Libros</h2>
+
+  <!-- Formulario de búsqueda -->
+  <form th:action="@{libros}" method="get" class="mb-3">
+    <div class="input-group mb-4">
+      <input type="text" name="buscarLibro" class="form-control px-4 py-2 rounded-lg" placeholder="Buscar libros" th:value="${buscarLibro}">
+      <button class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition duration-200" type="submit">Buscar</button>
+    </div>
+  </form>
+
+  <!-- Tabla de libros -->
+  <div class="bg-white bg-opacity-90 backdrop-blur-md p-6 rounded-lg shadow-md mb-6">
+    <table class="w-full text-left">
+      <thead class="bg-blue-500 text-white">
+      <tr>
+        <th class="py-3 px-4">Código</th>
+        <th class="py-3 px-4">Título</th>
+        <th class="py-3 px-4">Género</th>
+        <th class="py-3 px-4">Fecha Publicación</th>
+        <th class="py-3 px-4">Autor</th>
+        <th class="py-3 px-4">Opciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="libro: ${libros}" class="hover:bg-gray-200">
+        <td class="py-3 px-4" th:text="${libro.id}"></td>
+        <td class="py-3 px-4" th:text="${libro.titulo}"></td>
+        <td class="py-3 px-4" th:text="${libro.genero}"></td>
+        <td class="py-3 px-4" th:text="${libro.fechapublicacion}"></td>
+        <td class="py-3 px-4" th:text="${libro.autor.nombre}"></td>
+        <td class="py-3 px-4">
+          <a th:href="@{/editarLibro/} + ${libro.id}" class="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-700 transition duration-200">Actualizar</a>
+          <a th:href="@{/eliminarLibro/} + ${libro.id}" class="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-700 transition duration-200">Eliminar</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Botones adicionales -->
+  <div class="flex justify-between mt-8">
+    <a th:href="@{/formularioLibro}" class="bg-blue-500 text-white px-6 py-3 rounded-full shadow-md hover:bg-blue-700 transition duration-200">Nuevo Libro</a>
+    <a th:href="@{/libros/pdf}" class="bg-yellow-500 text-black px-6 py-3 rounded-full shadow-md hover:bg-yellow-700 transition duration-200">Lista de libros</a>
+  </div>
+</div>
+</body>
+</html>

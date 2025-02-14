@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nosotros - Biblioteca Virtual</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+        background-image: url('https://source.unsplash.com/1600x900/?books,library');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-color: #ffefd5; /* Fallback for older browsers */
+    }
+    .bg-custom-gradient {
+        background: linear-gradient(45deg, #ff6f61, #ff9966);
+    }
+    .text-custom {
+        color: #ff6f61;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+<!-- NAVBAR -->
+<nav class="bg-custom-gradient shadow-md sticky top-0 z-50">
+  <div class="max-w-screen-xl mx-auto flex items-center justify-between p-4">
+    <a th:href="@{/}" class="flex items-center space-x-3">
+      <img src="https://img.freepik.com/vector-premium/vector-logotipo-cine-vector-pelicula-rollo-sobre-fondo-blanco_472355-306.jpg" class="h-10 rounded-full" alt="Logo Biblioteca" />
+      <span class="text-2xl font-bold text-white">책막스</span>
+    </a>
+    <div class="hidden md:flex space-x-6 text-lg">
+      <a th:href="@{/}" class="text-white font-semibold hover:text-yellow-300">Inicio</a>
+      <a th:href="@{/nosotros}" class="text-white hover:text-yellow-300">Nosotros</a>
+      <a th:href="@{/libros}" class="text-white hover:text-yellow-300">Libros</a>
+      <a th:href="@{/nuevoUsuario}" class="text-white hover:text-yellow-300">Usuarios</a>
+      <a th:href="@{/autores}" class="text-white hover:text-yellow-300">Autores</a>
+      <a th:href="@{/prestamo}" class="text-white hover:text-yellow-300">Préstamos</a>
+    </div>
+  </div>
+</nav>
+
+<!-- CARRUSEL -->
+<div id="carousel" class="relative w-full max-w-screen-xl mx-auto mt-6" data-carousel="static">
+  <div class="relative h-64 md:h-96 overflow-hidden rounded-lg">
+    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+      <img th:src="@{imagenes/Anosotros.jpg}" class="absolute block w-full h-full object-cover" alt="Biblioteca 1">
+    </div>
+    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+      <img th:src="@{imagenes/Anosotros2.jpg}" class="absolute block w-full h-full object-cover" alt="Biblioteca 2">
+    </div>
+    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+      <img th:src="@{imagenes/Anosotros3.jpg}" class="absolute block w-full h-full object-cover" alt="Biblioteca 3">
+    </div>
+  </div>
+</div>
+
+<!-- SECCIÓN SOBRE NOSOTROS -->
+<section class="max-w-screen-lg mx-auto text-center mt-12 p-8 bg-white bg-opacity-90 backdrop-blur-md shadow-xl rounded-lg">
+  <h2 class="text-4xl font-extrabold text-custom">Quiénes Somos</h2>
+  <p class="text-lg text-gray-700 mt-4">
+    Somos una biblioteca virtual que promueve el acceso libre y equitativo a la información, ofreciendo una amplia gama de recursos educativos,
+    desde literatura clásica hasta investigaciones científicas y documentos académicos.
+  </p>
+</section>
+
+<!-- MISIÓN Y VISIÓN -->
+<section class="max-w-screen-lg mx-auto grid md:grid-cols-2 gap-10 mt-12 p-8">
+  <div class="bg-white bg-opacity-90 backdrop-blur-md p-6 rounded-lg shadow-md">
+    <h3 class="text-2xl font-semibold text-custom">Nuestra Misión</h3>
+    <p class="text-gray-700 mt-2">
+      Proporcionar un entorno digital innovador que facilite el aprendizaje y el acceso a una vasta colección de libros electrónicos y materiales educativos.
+    </p>
+  </div>
+  <div class="bg-white bg-opacity-90 backdrop-blur-md p-6 rounded-lg shadow-md">
+    <h3 class="text-2xl font-semibold text-custom">Nuestra Visión</h3>
+    <p class="text-gray-700 mt-2">
+      Convertirnos en la plataforma de referencia para la educación digital en habla hispana, brindando recursos accesibles y de alta calidad.
+    </p>
+  </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section class="max-w-screen-lg mx-auto mt-12 p-8 bg-white bg-opacity-90 backdrop-blur-md shadow-xl rounded-lg">
+  <h3 class="text-3xl font-semibold text-custom text-center">Lo que dicen nuestros usuarios</h3>
+  <div class="mt-6 grid md:grid-cols-2 gap-6">
+    <div class="bg-gray-100 p-6 rounded-lg shadow-md">
+      <p class="text-gray-700 italic">"CheckMax ha sido una herramienta invaluable para mis estudios universitarios. Encuentro todos los libros que necesito fácilmente."</p>
+      <span class="block mt-4 text-right font-semibold">- Juan Pérez</span>
+    </div>
+    <div class="bg-gray-100 p-6 rounded-lg shadow-md">
+      <p class="text-gray-700 italic">"Acceder a libros de calidad desde cualquier lugar es maravilloso. La colección de CheckMax es increíble."</p>
+      <span class="block mt-4 text-right font-semibold">- María Rodríguez</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="max-w-screen-lg mx-auto text-center mt-12 p-8 bg-white bg-opacity-90 backdrop-blur-md shadow-xl rounded-lg">
+  <h3 class="text-3xl font-semibold text-custom">Contáctanos</h3>
+  <p class="text-lg text-gray-700 mt-4">Si tienes preguntas o necesitas ayuda, envíanos un correo a <strong>soporte@checkmax.com</strong> o llámanos al <strong>+34 600 123 456</strong>.</p>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-gray-900 text-white text-center py-6 mt-12">
+  <p class="text-lg">&copy; 2025 CheckMax. Todos los derechos reservados.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+</body>
+</html>

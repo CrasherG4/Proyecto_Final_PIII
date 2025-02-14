@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Usuarios</title>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+</head>
+<body>
+<!-- NAVBAR -->
+<nav class="bg-white shadow-md sticky top-0 z-50">
+    <div class="max-w-screen-xl mx-auto flex items-center justify-between p-4">
+        <a th:href="@{/}" class="flex items-center space-x-3">
+            <img src="https://img.freepik.com/vector-premium/vector-logotipo-cine-vector-pelicula-rollo-sobre-fondo-blanco_472355-306.jpg" class="h-10" alt="Logo Biblioteca" />
+            <span class="text-2xl font-bold text-blue-700">CheckMax</span>
+        </a>
+        <div class="hidden md:flex space-x-6 text-lg">
+            <a th:href="@{/}" class="text-blue-700 font-semibold">Inicio</a>
+            <a th:href="@{/nosotros}" class="text-gray-700 hover:text-blue-600">Nosotros</a>
+            <a th:href="@{/formularioLibro}" class="text-gray-700 hover:text-blue-600">Libros</a>
+            <a th:href="@{/formularioUsuario}" class="text-gray-700 hover:text-blue-600">Usuarios</a>
+            <a th:href="@{/formularioAutor}" class="text-gray-700 hover:text-blue-600">Autores</a>
+            <a th:href="@{/formularioPrestamo}" class="text-gray-700 hover:text-blue-600">Préstamos</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mx-auto py-8">
+    <div class="text-center mb-8">
+        <h2 class="text-3xl font-bold">Lista de Usuarios</h2>
+    </div>
+
+    <!-- Formulario de búsqueda -->
+    <div class="flex justify-center mb-8">
+        <form th:action="@{usuarios}" method="get" class="w-full max-w-sm">
+            <div class="mb-5 flex flex-col space-y-4">
+                <input type="text" name="buscarUsuario" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Buscar Usuarios" th:value="${buscarUsuario}">
+                <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center" type="submit">Buscar</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="relative overflow-x-auto">
+        <table class="w-full text-sm text-left text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+                <th scope="col" class="px-6 py-3">Código</th>
+                <th scope="col" class="px-6 py-3">Nombre</th>
+                <th scope="col" class="px-6 py-3">Apellido</th>
+                <th scope="col" class="px-6 py-3">Correo</th>
+                <th scope="col" class="px-6 py-3">Tipo de Usuario</th>
+                <th scope="col" class="px-6 py-3">Opciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="bg-white border-b" th:each="usuario : ${usuarios}">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap" th:text="${usuario.id}"></th>
+                <td class="px-6 py-4" th:text="${usuario.nombre}"></td>
+                <td class="px-6 py-4" th:text="${usuario.apellido}"></td>
+                <td class="px-6 py-4" th:text="${usuario.correo}"></td>
+                <td class="px-6 py-4" th:text="${usuario.tipoUsuario}"></td>
+                <td class="px-6 py-4 flex space-x-4">
+                    <a th:href="@{/editarUsuario/} + ${usuario.id}" class="text-blue-600 hover:text-blue-900">Actualizar</a>
+                    <a th:href="@{/eliminarUsuario/} + ${usuario.id}" class="text-red-600 hover:text-red-900">Eliminar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="flex justify-center mt-8">
+        <a th:href="@{/formularioUsuario}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Nuevo Usuario</a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+</body>
+</html>

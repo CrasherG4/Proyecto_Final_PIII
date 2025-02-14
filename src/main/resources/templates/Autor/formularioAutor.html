@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Autores</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+        background-image: url('https://source.unsplash.com/1600x900/?books,library');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-color: #ffefd5; /* Fallback for older browsers */
+    }
+    .bg-custom-gradient {
+        background: linear-gradient(45deg, #ff6f61, #ff9966);
+    }
+    .text-custom {
+        color: #ff6f61;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gray-200 text-gray-900">
+<!-- NAVBAR -->
+<nav class="bg-custom-gradient shadow-md sticky top-0 z-50">
+  <div class="max-w-screen-xl mx-auto flex items-center justify-between p-4">
+    <a th:href="@{/}" class="flex items-center space-x-3">
+      <img src="https://img.freepik.com/vector-premium/vector-logotipo-cine-vector-pelicula-rollo-sobre-fondo-blanco_472355-306.jpg" class="h-10 rounded-full" alt="Logo Biblioteca" />
+      <span class="text-2xl font-bold text-white">책막스</span>
+    </a>
+    <div class="hidden md:flex space-x-6 text-lg">
+      <a th:href="@{/}" class="text-white font-semibold hover:text-yellow-300">Inicio</a>
+      <a th:href="@{/nosotros}" class="text-white hover:text-yellow-300">Nosotros</a>
+      <a th:href="@{/libros}" class="text-white hover:text-yellow-300">Libros</a>
+      <a th:href="@{/nuevoUsuario}" class="text-white hover:text-yellow-300">Usuarios</a>
+      <a th:href="@{/autores}" class="text-white hover:text-yellow-300">Autores</a>
+      <a th:href="@{/prestamo}" class="text-white hover:text-yellow-300">Préstamos</a>
+    </div>
+  </div>
+</nav>
+<div class="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="w-full max-w-md bg-white bg-opacity-90 backdrop-blur-md shadow-xl rounded-lg p-8">
+    <h2 class="text-center text-3xl font-extrabold text-custom mb-6">Registro de Autores</h2>
+    <!-- Formulario -->
+    <form th:action="@{/guardarAutor}" method="post" th:object="${autor}">
+      <!-- Campo oculto para el ID -->
+      <input type="number" id="id-codigo" th:field="*{id}" hidden>
+
+      <!-- Campo ci -->
+      <div class="mb-6">
+        <label for="id-ci" class="block text-gray-700 text-lg font-medium mb-2">Ci:</label>
+        <input type="text" id="id-ci" th:field="*{ci}" class="shadow-sm appearance-none border border-gray-300 rounded-md w-full py-3 px-4 text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+      </div>
+
+      <!-- Campo nombre -->
+      <div class="mb-6">
+        <label for="id-nombre" class="block text-gray-700 text-lg font-medium mb-2">Nombre:</label>
+        <input type="text" id="id-nombre" th:field="*{nombre}" class="shadow-sm appearance-none border border-gray-300 rounded-md w-full py-3 px-4 text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+      </div>
+
+      <!-- Campo Apellido -->
+      <div class="mb-6">
+        <label for="id-apellido" class="block text-gray-700 text-lg font-medium mb-2">Apellido:</label>
+        <input type="text" id="id-apellido" th:field="*{apellido}" class="shadow-sm appearance-none border border-gray-300 rounded-md w-full py-3 px-4 text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+      </div>
+
+      <!-- Botón de Guardar -->
+      <div class="flex items-center justify-center mt-8">
+        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+          Guardar Autor
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

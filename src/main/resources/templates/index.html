@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Virtual | CheckMax</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('https://source.unsplash.com/1600x900/?books,library');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: #ffefd5; /* Fallback for older browsers */
+        }
+        .bg-custom-gradient {
+            background: linear-gradient(45deg, #ff6f61, #ff9966);
+        }
+        .text-custom {
+            color: #ff6f61;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</head>
+<body class="bg-gray-200 text-gray-900">
+
+<!-- NAVBAR -->
+<nav class="bg-custom-gradient shadow-md sticky top-0 z-50">
+    <div class="max-w-screen-xl mx-auto flex items-center justify-between p-4">
+        <a th:href="@{/}" class="flex items-center space-x-3">
+            <img src="https://img.freepik.com/vector-premium/vector-logotipo-cine-vector-pelicula-rollo-sobre-fondo-blanco_472355-306.jpg" class="h-10 rounded-full" alt="Logo Biblioteca" />
+            <span class="text-2xl font-bold text-white">책막스</span>
+        </a>
+        <div class="hidden md:flex space-x-6 text-lg">
+            <a th:href="@{/}" class="text-white font-semibold hover:text-yellow-300">Inicio</a>
+            <a th:href="@{/nosotros}" class="text-white hover:text-yellow-300">Nosotros</a>
+            <a th:href="@{/libros}" class="text-white hover:text-yellow-300">Libros</a>
+            <a th:href="@{/nuevoUsuario}" class="text-white hover:text-yellow-300">Usuarios</a>
+            <a th:href="@{/autores}" class="text-white hover:text-yellow-300">Autores</a>
+            <a th:href="@{/prestamo}" class="text-white hover:text-yellow-300">Préstamos</a>
+        </div>
+    </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="relative w-full h-80 md:h-96 flex items-center justify-center bg-cover bg-center" style="background-image: url('imagenes/biblioteca1.jpg');">
+    <div class="bg-black bg-opacity-50 w-full h-full flex flex-col items-center justify-center text-center text-white p-8">
+        <h1 class="text-5xl font-extrabold">Explora el Conocimiento</h1>
+        <p class="text-lg mt-4">Miles de libros, artículos y recursos disponibles en nuestra biblioteca virtual.</p>
+    </div>
+</section>
+
+<!-- INFORMACIÓN -->
+<main class="max-w-screen-lg mx-auto p-8">
+    <h2 class="text-3xl font-bold text-center text-custom mb-6">Bienvenidos a CheckMax</h2>
+    <p class="text-lg text-gray-700 leading-relaxed text-center mb-8">
+        Tu biblioteca virtual de confianza, con acceso a una amplia gama de recursos educativos y literatura de calidad.
+    </p>
+
+    <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white shadow-md rounded-lg p-6 text-center">
+            <h3 class="text-xl font-bold text-custom">Acceso 24/7</h3>
+            <p class="text-gray-600 mt-2">Consulta nuestra biblioteca en cualquier momento y lugar.</p>
+        </div>
+        <div class="bg-white shadow-md rounded-lg p-6 text-center">
+            <h3 class="text-xl font-bold text-custom">Más de 10,000 Libros</h3>
+            <p class="text-gray-600 mt-2">Encuentra libros en diversas categorías y géneros.</p>
+        </div>
+        <div class="bg-white shadow-md rounded-lg p-6 text-center">
+            <h3 class="text-xl font-bold text-custom">Préstamos y Reservas</h3>
+            <p class="text-gray-600 mt-2">Solicita libros físicos y recíbelos en tu domicilio.</p>
+        </div>
+    </div>
+</main>
+
+<!-- TESTIMONIOS -->
+<section class="bg-gray-200 py-12">
+    <div class="max-w-screen-lg mx-auto text-center">
+        <h2 class="text-3xl font-bold text-custom mb-6">Testimonios de Usuarios</h2>
+        <p class="text-lg text-gray-700 mb-8">Lo que dicen nuestros lectores</p>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <p class="text-gray-600 italic">“CheckMax me ha ayudado a encontrar información valiosa para mis estudios. ¡Excelente servicio!”</p>
+                <p class="text-custom font-bold mt-4">- Juan Pérez</p>
+            </div>
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <p class="text-gray-600 italic">“Me encanta la facilidad para buscar y descargar libros, todo está muy organizado.”</p>
+                <p class="text-custom font-bold mt-4">- María González</p>
+            </div>
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <p class="text-gray-600 italic">“Una biblioteca virtual increíble, con una gran variedad de libros y recursos educativos.”</p>
+                <p class="text-custom font-bold mt-4">- Luis Fernández</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-gray-900 text-white text-center py-6 mt-12">
+    <p class="text-lg">&copy; 2025 CheckMax. Todos los derechos reservados.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</body>
+</html>
