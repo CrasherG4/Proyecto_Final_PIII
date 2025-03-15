@@ -20,6 +20,7 @@ public class Libro {
     private String titulo;
 
     private String genero;
+    private String img;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechapublicacion;
@@ -56,6 +57,14 @@ public class Libro {
 
     public void setGenero(String genero) {
         this.genero = genero;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public Date getFechapublicacion() {
