@@ -58,5 +58,4 @@ public class AuthBibliotecario {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
 }

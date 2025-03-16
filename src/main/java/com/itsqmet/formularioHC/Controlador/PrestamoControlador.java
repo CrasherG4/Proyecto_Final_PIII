@@ -1,5 +1,6 @@
 package com.itsqmet.formularioHC.Controlador;
 
+import com.itsqmet.formularioHC.Entidad.Autor;
 import com.itsqmet.formularioHC.Entidad.Bibliotecario;
 import com.itsqmet.formularioHC.Entidad.Libro;
 import com.itsqmet.formularioHC.Entidad.Prestamo;
@@ -44,14 +45,14 @@ public class PrestamoControlador {
     @PostMapping("guardarPrestamo")
     public Prestamo guardar(@RequestBody Prestamo prestamo){
         //CAMBIO
-        Long BibliotecarioId = prestamo.getBibliotecario().getId();
-        Bibliotecario Bibliotecario = BibliotecarioServicio.buscarBibliotecario(BibliotecarioId)
-                .orElseThrow(()-> new RuntimeException("Bibliotecario no encontrado"));
-        prestamo.setBibliotecario(Bibliotecario);
         Long libroId = prestamo.getLibro().getId();
         Libro libro = libroServicio.buscarLibro(libroId)
                 .orElseThrow(()-> new RuntimeException("Libro no encontrado"));
         prestamo.setLibro(libro);
+        Long bibliotecarioId = prestamo.getBibliotecario().getId();
+        Bibliotecario bibliotecario = bibliotecarioServicio.buscarBibliotecario(bibliotecarioId)
+                .orElseThrow(()-> new RuntimeException("Bibliotecario no encontrado"));
+        prestamo.setBibliotecario(bibliotecario);
         return prestamoServicio.guardarPrestamo(prestamo);
     }
 

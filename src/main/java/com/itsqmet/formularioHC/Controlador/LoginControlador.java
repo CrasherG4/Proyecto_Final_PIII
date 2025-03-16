@@ -1,18 +1,46 @@
 package com.itsqmet.formularioHC.Controlador;
 
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import java.util.HashMap;
+import java.util.Map;
+
+@RestController
 public class LoginControlador {
 
     @GetMapping("/login")
-    public String login(){
+    public String login() {
         return "/Bibliotecario/login";
     }
 
+    @GetMapping("/postLogin")
+    @ResponseBody
+    public Map<String, String> dirigirPorRol(Authentication authentication) {
+        User bibliotecario = (User) authentication.getPrincipal();
+        String role = bibliotecario.getAuthorities().stream()
+                .map(grantedAuthority -> grantedAuthority.getAuthority())
+                .findFirst()
+                .orElse("");
+        Map<String, String> response = new HashMap<>();
+        if (role.equals("ROLE_ADMIN")) {
+            response.put("redirectTo", "/admin");
+        } else if (role.equals("ROLE_CLIENTE") || role.equals("ROLE_EMPLEADO")) {
+            response.put("redirectTo", "/");
+        } else {
+            response.put("redirectTo", "/login?error");
+        }
+        return response;
+    }
+
+
+    /*
     @GetMapping("/postLogin")
     public String dirigirPorRol(Authentication authentication){
         User bibliotecario= (User) authentication.getPrincipal();
@@ -29,4 +57,6 @@ public class LoginControlador {
         }
         return "redirect:/login?error";
     }
+
+     */
 }

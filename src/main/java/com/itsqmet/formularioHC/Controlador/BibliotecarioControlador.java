@@ -47,12 +47,6 @@ public class BibliotecarioControlador {
 
 
     /*
-    //ELIMINAR
-    @DeleteMapping("/eliminarBibliotecario/{id}")
-    public ResponseEntity<Boolean> eliminar(@PathVariable Long id){
-        bibliotecarioServicio.eliminarBibliotecario(id);
-        return ResponseEntity.ok(true);
-    }
 
     //ACTUALIZAR
     @PutMapping("/actualizarBibliotecario/{id}")
