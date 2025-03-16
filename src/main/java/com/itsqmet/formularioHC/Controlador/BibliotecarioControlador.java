@@ -5,23 +5,75 @@ import com.itsqmet.formularioHC.Entidad.Bibliotecario;
 import com.itsqmet.formularioHC.Roles.Rol;
 import com.itsqmet.formularioHC.Servicio.BibliotecarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 public class BibliotecarioControlador {
 
     @Autowired
     private BibliotecarioServicio bibliotecarioServicio;
 
+    //LEER
+    @GetMapping("bibliotecarios")
+    public List<Bibliotecario> bibliotecarios(){
+        List<Bibliotecario> bibliotecarios = bibliotecarioServicio.listarUsuarios();
+        return bibliotecarios;
+    }
 
+    //GUARDAR
+    @PostMapping("guardarBibliotecario")
+    public Bibliotecario guardar(@RequestBody Bibliotecario bibliotecarioDTO) {
+        return bibliotecarioServicio.registrar(
+                bibliotecarioDTO.getId(),
+                bibliotecarioDTO.getNombre(),
+                bibliotecarioDTO.getUsername(),
+                bibliotecarioDTO.getPassword(),
+                bibliotecarioDTO.getRol()
+        );
+    }
+
+    //ELIMINAR
+    @DeleteMapping("/eliminarBibliotecario/{id}")
+    public ResponseEntity<Boolean> eliminar(@PathVariable Long id){
+        bibliotecarioServicio.eliminarBbibliotecario(id);
+        return ResponseEntity.ok(true);
+    }
+
+
+    /*
+    //ELIMINAR
+    @DeleteMapping("/eliminarBibliotecario/{id}")
+    public ResponseEntity<Boolean> eliminar(@PathVariable Long id){
+        bibliotecarioServicio.eliminarBibliotecario(id);
+        return ResponseEntity.ok(true);
+    }
+
+    //ACTUALIZAR
+    @PutMapping("/actualizarBibliotecario/{id}")
+    public ResponseEntity<Bibliotecario> actualizar(@PathVariable Long id, @RequestBody Bibliotecario bibliotecarioData){
+        Optional<Bibliotecario> bibliotecarioOpcional = bibliotecarioServicio.buscarBibliotecarioId(id);
+        Bibliotecario bibliotecario=bibliotecarioOpcional.get();
+        bibliotecario.setNombre(bibliotecarioData.getNombre());
+        bibliotecario.setDescripcion(bibliotecarioData.getDescripcion());
+        bibliotecario.setPrecio(bibliotecarioData.getPrecio());
+        bibliotecario.setStock(bibliotecarioData.getStock());
+        bibliotecario.setProveedor(bibliotecarioData.getProveedor());
+
+        Bibliotecario bibliotecarioRegistrado = bibliotecarioServicio.guardarBibliotecario(bibliotecario);
+        return ResponseEntity.ok(bibliotecarioRegistrado);
+    }
+     */
+
+
+
+
+    /*
     //LEER
     @GetMapping("/bibliotecarios")
     public String mostrarBibliotecarios(@RequestParam(name = "buscarBibliotecario", required = false, defaultValue = "") String buscarBibliotecario, Model model){
@@ -80,4 +132,5 @@ public class BibliotecarioControlador {
         bibliotecarioServicio.registrar(id,nombre,username,password,rol);
         return "redirect:/bibliotecarios";
     }
+     */
 }

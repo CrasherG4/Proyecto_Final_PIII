@@ -22,8 +22,9 @@ public class PrestamoServicio {
         return prestamoRepositorio.findById(id);
     }
 
-    public void guardarPrestamo(Prestamo prestamo){
-        prestamoRepositorio.save(prestamo);
+    public Prestamo guardarPrestamo(Prestamo prestamo){
+
+        return prestamoRepositorio.save(prestamo);
     }
 
     public void eliminarPrestamo(Long id){

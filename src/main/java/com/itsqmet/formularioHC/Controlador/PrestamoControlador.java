@@ -1,31 +1,31 @@
 package com.itsqmet.formularioHC.Controlador;
 
+import com.itsqmet.formularioHC.Entidad.Bibliotecario;
+import com.itsqmet.formularioHC.Entidad.Libro;
 import com.itsqmet.formularioHC.Entidad.Prestamo;
 import com.itsqmet.formularioHC.Servicio.BibliotecarioServicio;
 import com.itsqmet.formularioHC.Servicio.LibroServicio;
 import com.itsqmet.formularioHC.Servicio.PrestamoServicio;
-import com.itsqmet.formularioHC.Servicio.UsuarioServicio;
+import com.itsqmet.formularioHC.Servicio.BibliotecarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 public class PrestamoControlador {
 
     @Autowired
     PrestamoServicio prestamoServicio;
 
     @Autowired
-    UsuarioServicio usuarioServicio;
+    BibliotecarioServicio BibliotecarioServicio;
 
     @Autowired
     LibroServicio libroServicio;
@@ -33,6 +33,52 @@ public class PrestamoControlador {
     @Autowired
     BibliotecarioServicio bibliotecarioServicio;
 
+    //LEER
+    @GetMapping("prestamos")
+    public List<Prestamo> prestamos(){
+        List<Prestamo> prestamos = prestamoServicio.listarPrestamos();
+        return prestamos;
+    }
+
+    //GUARDAR
+    @PostMapping("guardarPrestamo")
+    public Prestamo guardar(@RequestBody Prestamo prestamo){
+        //CAMBIO
+        Long BibliotecarioId = prestamo.getBibliotecario().getId();
+        Bibliotecario Bibliotecario = BibliotecarioServicio.buscarBibliotecario(BibliotecarioId)
+                .orElseThrow(()-> new RuntimeException("Bibliotecario no encontrado"));
+        prestamo.setBibliotecario(Bibliotecario);
+        Long libroId = prestamo.getLibro().getId();
+        Libro libro = libroServicio.buscarLibro(libroId)
+                .orElseThrow(()-> new RuntimeException("Libro no encontrado"));
+        prestamo.setLibro(libro);
+        return prestamoServicio.guardarPrestamo(prestamo);
+    }
+
+    //ELIMINAR
+    @DeleteMapping("/eliminarPrestamo/{id}")
+    public ResponseEntity<Boolean> eliminar(@PathVariable Long id){
+        prestamoServicio.eliminarPrestamo(id);
+        return ResponseEntity.ok(true);
+    }
+
+    //ACTUALIZAR
+    @PutMapping("/actualizarPrestamo/{id}")
+    public ResponseEntity<Prestamo> actualizar(@PathVariable Long id, @RequestBody Prestamo prestamoData){
+        Optional<Prestamo> prestamoOpcional = prestamoServicio.buscarPrestamo(id);
+        Prestamo prestamo=prestamoOpcional.get();
+        prestamo.setDescripcion(prestamoData.getDescripcion());
+        prestamo.setFechaPrestamo(prestamoData.getFechaPrestamo());
+        prestamo.setFechaDevolucion(prestamoData.getFechaDevolucion());
+        prestamo.setBibliotecario(prestamoData.getBibliotecario());
+        prestamo.setLibro(prestamoData.getLibro());
+
+        Prestamo prestamoRegistrado = prestamoServicio.guardarPrestamo(prestamo);
+        return ResponseEntity.ok(prestamoRegistrado);
+    }
+    
+    
+    /*
     //Leer
     @GetMapping("/prestamo")
     public String mostrarPrestamos(@RequestParam(name = "buscarPrestamo", required = false, defaultValue = "") String buscarPrestamo, Model model) {
@@ -46,8 +92,8 @@ public class PrestamoControlador {
     @GetMapping("/formularioPrestamo")
     public String formularioPrestamo(Model model){
         model.addAttribute("prestamo", new Prestamo());
-        //model.addAttribute("usuarios", usuarioServicio.listarUsuarios());
-        model.addAttribute("bibliotecarios", bibliotecarioServicio.listarUsuarios());
+        //model.addAttribute("Bibliotecarios", BibliotecarioServicio.listarBibliotecarios());
+        model.addAttribute("bibliotecarios", bibliotecarioServicio.listarBibliotecarios());
         model.addAttribute("libros", libroServicio.listarLibros());
         return "/Prestamo/formularioPrestamo";
     }
@@ -63,7 +109,7 @@ public class PrestamoControlador {
     public String editarPrestamo(@PathVariable Long id, Model model){
         Optional<Prestamo> prestamo = prestamoServicio.buscarPrestamo(id);
         model.addAttribute("prestamo", prestamo);
-        model.addAttribute("bibliotecarios", bibliotecarioServicio.listarUsuarios());
+        model.addAttribute("bibliotecarios", bibliotecarioServicio.listarBibliotecarios());
         model.addAttribute("libros", libroServicio.listarLibros());
         return "/Prestamo/formularioPrestamo";
     }
@@ -74,4 +120,6 @@ public class PrestamoControlador {
         prestamoServicio.eliminarPrestamo(id);
         return "redirect:/prestamo";
     }
+    
+     */
 }

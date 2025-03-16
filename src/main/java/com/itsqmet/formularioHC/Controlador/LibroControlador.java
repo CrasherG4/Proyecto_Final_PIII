@@ -1,5 +1,6 @@
 package com.itsqmet.formularioHC.Controlador;
 
+import com.itsqmet.formularioHC.Entidad.Autor;
 import com.itsqmet.formularioHC.Entidad.Libro;
 import com.itsqmet.formularioHC.Entidad.Prestamo;
 import com.itsqmet.formularioHC.Servicio.AutorServicio;
@@ -23,7 +24,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 
 public class LibroControlador {
 
@@ -36,6 +37,47 @@ public class LibroControlador {
     @Autowired
     PrestamoServicio prestamoServicio;
 
+    //LEER
+    @GetMapping("libros")
+    public List<Libro> libros(){
+        List<Libro> libros = libroServicio.listarLibros();
+        return libros;
+    }
+
+    //GUARDAR
+    @PostMapping("guardarLibro")
+    public Libro guardar(@RequestBody Libro libro){
+        //CAMBIO
+        Long autorId = libro.getAutor().getId();
+        Autor autor = autorServicio.buscarAutor(autorId)
+                .orElseThrow(()-> new RuntimeException("Autor no encontrado"));
+        libro.setAutor(autor);
+        return libroServicio.guardarLibro(libro);
+    }
+
+    //ELIMINAR
+    @DeleteMapping("/eliminarLibro/{id}")
+    public ResponseEntity<Boolean> eliminar(@PathVariable Long id){
+        libroServicio.eliminarLibro(id);
+        return ResponseEntity.ok(true);
+    }
+
+    //ACTUALIZAR
+    @PutMapping("/actualizarLibro/{id}")
+    public ResponseEntity<Libro> actualizar(@PathVariable Long id, @RequestBody Libro libroData){
+        Optional<Libro> libroOpcional = libroServicio.buscarLibro(id);
+        Libro libro=libroOpcional.get();
+        libro.setTitulo(libroData.getTitulo());
+        libro.setFechapublicacion(libroData.getFechapublicacion());
+        libro.setGenero(libroData.getGenero());
+        libro.setImg(libroData.getImg());
+        libro.setAutor(libroData.getAutor());
+
+        Libro libroRegistrado = libroServicio.guardarLibro(libro);
+        return ResponseEntity.ok(libroRegistrado);
+    }
+    
+    /*
     //LEER
     @GetMapping("/libros")
     public String mostrarLibros(@RequestParam(name = "buscarLibro", required = false, defaultValue = "") String buscarLibro, Model model){
@@ -102,5 +144,7 @@ public class LibroControlador {
 
         return "Libro/listaLibroPrestamo";
     }
+    
+     */
 
 }

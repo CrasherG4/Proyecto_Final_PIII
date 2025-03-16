@@ -1,5 +1,6 @@
 package com.itsqmet.formularioHC.Entidad;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,6 +17,7 @@ public class Autor {
     private String apellido;
 
     @OneToMany(mappedBy = "autor", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Libro> libros;
 
     public Long getId() {

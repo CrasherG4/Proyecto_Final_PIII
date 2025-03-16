@@ -40,9 +40,8 @@ public class LibroServicio {
         return libroRepositorio.findById(id);
     }
 
-    public void guardarLibro(Libro libro ){
-
-        libroRepositorio.save(libro);
+    public Libro guardarLibro(Libro libro ){
+        return libroRepositorio.save(libro);
     }
 
     public void eliminarLibro(Long id){

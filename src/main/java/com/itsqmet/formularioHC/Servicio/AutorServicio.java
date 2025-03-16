@@ -32,9 +32,9 @@ public class AutorServicio {
         return autorRepositorio.findById(id);
     }
 
-    public void guardarAutor(Autor autor) {
+    public Autor guardarAutor(Autor autor) {
 
-        autorRepositorio.save(autor);
+        return autorRepositorio.save(autor);
     }
 
     public void eliminarAutor(Long id) {

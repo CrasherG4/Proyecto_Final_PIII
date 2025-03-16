@@ -1,5 +1,6 @@
 package com.itsqmet.formularioHC.Entidad;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -33,6 +34,7 @@ public class Libro {
     private List<Cliente> clientes;*/
 
     @OneToMany(mappedBy = "libro", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Prestamo> prestamos;
 
     public Long getId() {

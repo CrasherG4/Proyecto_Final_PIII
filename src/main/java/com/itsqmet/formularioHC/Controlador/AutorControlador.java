@@ -5,6 +5,7 @@ import com.itsqmet.formularioHC.Entidad.Libro;
 import com.itsqmet.formularioHC.Servicio.AutorServicio;
 import com.itsqmet.formularioHC.Servicio.LibroServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 public class AutorControlador {
 
     @Autowired
@@ -21,6 +22,40 @@ public class AutorControlador {
     @Autowired
     LibroServicio libroServicio;
 
+    //LEER
+    @GetMapping("autores")
+    public List<Autor> autores(){
+        List<Autor> autores = autorServicio.listarAutores();
+        return autores;
+    }
+
+    //GUARDAR
+    @PostMapping("guardarAutor")
+    public Autor guardar(@RequestBody Autor autor){
+        return autorServicio.guardarAutor(autor);
+    }
+
+    //ELIMINAR
+    @DeleteMapping("/eliminarAutor/{id}")
+    public ResponseEntity<Boolean> eliminar(@PathVariable Long id){
+        autorServicio.eliminarAutor(id);
+        return ResponseEntity.ok(true);
+    }
+
+    //ACTUALIZAR
+    @PutMapping("/actualizarAutor/{id}")
+    public ResponseEntity<Autor> actualizar(@PathVariable Long id, @RequestBody Autor autorData){
+        Optional<Autor> autorOpcional = autorServicio.buscarAutor(id);
+        Autor autor=autorOpcional.get();
+        autor.setNombre(autorData.getNombre());
+        autor.setApellido(autorData.getApellido());
+        autor.setCi(autorData.getCi());
+
+        Autor autorRegistrado = autorServicio.guardarAutor(autor);
+        return ResponseEntity.ok(autorRegistrado);
+    }
+    
+    /*
     //LEER
     @GetMapping("/autores")
     public String mostrarAutores(@RequestParam(name = "buscarAutores", required = false, defaultValue = "") String buscarAutores, Model model){
@@ -70,5 +105,7 @@ public class AutorControlador {
 
         return "Libro/listaAutorLibros";
     }
+    
+     */
 
 }

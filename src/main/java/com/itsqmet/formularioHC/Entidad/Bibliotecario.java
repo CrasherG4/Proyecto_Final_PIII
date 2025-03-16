@@ -1,6 +1,7 @@
 package com.itsqmet.formularioHC.Entidad;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.itsqmet.formularioHC.Roles.Rol;
 import jakarta.persistence.*;
 
@@ -20,6 +21,7 @@ public class Bibliotecario {
     private Rol rol;
 
     @OneToMany(mappedBy = "bibliotecario", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Prestamo> prestamos;
 
     public Long getId() {

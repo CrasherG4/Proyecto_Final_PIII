@@ -65,21 +65,31 @@ public class BibliotecarioServicio  implements UserDetailsService{
 
 
     @Transactional
-    public void registrar(Long id, String nombre, String username, String password, Rol rol) {
+    public Bibliotecario registrar(Long id, String nombre, String username, String password, Rol rol) {
         Bibliotecario bibliotecario;
+
+        // Si el ID no es nulo, busca un bibliotecario existente, si no, crea uno nuevo.
         if (id != null) {
             bibliotecario = bibliotecarioRepositorio.findById(id).orElse(new Bibliotecario());
         } else {
             bibliotecario = new Bibliotecario();
         }
+
+        // Asignación de propiedades.
         bibliotecario.setNombre(nombre);
         bibliotecario.setUsername(username);
+
+        // Codificación de la contraseña solo si es válida.
         if (password != null && !password.isEmpty()) {
             bibliotecario.setPassword(passwordEncoder.encode(password));
         }
+
         bibliotecario.setRol(rol);
-        bibliotecarioRepositorio.save(bibliotecario);
+
+        // Guarda el bibliotecario y retorna el objeto guardado.
+        return bibliotecarioRepositorio.save(bibliotecario);
     }
+
 
 
     public void eliminarBbibliotecario(Long id){
