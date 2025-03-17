@@ -5,11 +5,17 @@ import com.itsqmet.formularioHC.Entidad.Libro;
 import com.itsqmet.formularioHC.Servicio.AutorServicio;
 import com.itsqmet.formularioHC.Servicio.LibroServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,6 +59,20 @@ public class AutorControlador {
 
         Autor autorRegistrado = autorServicio.guardarAutor(autor);
         return ResponseEntity.ok(autorRegistrado);
+    }
+
+    @GetMapping("/autores/pdf")
+    public ResponseEntity<byte[]> descargarPdf() throws Exception{
+        String rutaPdf = autorServicio.generarAPdf();
+        File pdfFile = new File(rutaPdf);
+        if(!pdfFile.exists()){
+            throw new FileNotFoundException("El archivo pdf no existe");
+        }
+        byte[] contenido = Files.readAllBytes(pdfFile.toPath());
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "autores.pdf");
+        return new ResponseEntity<>(contenido,headers, HttpStatus.OK);
     }
     
     /*

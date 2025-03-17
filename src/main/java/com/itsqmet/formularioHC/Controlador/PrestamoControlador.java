@@ -9,11 +9,17 @@ import com.itsqmet.formularioHC.Servicio.LibroServicio;
 import com.itsqmet.formularioHC.Servicio.PrestamoServicio;
 import com.itsqmet.formularioHC.Servicio.BibliotecarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -77,7 +83,20 @@ public class PrestamoControlador {
         Prestamo prestamoRegistrado = prestamoServicio.guardarPrestamo(prestamo);
         return ResponseEntity.ok(prestamoRegistrado);
     }
-    
+
+    @GetMapping("/prestamos/pdf")
+    public ResponseEntity<byte[]> descargarPdf() throws Exception{
+        String rutaPdf = prestamoServicio.generarPPdf();
+        File pdfFile = new File(rutaPdf);
+        if(!pdfFile.exists()){
+            throw new FileNotFoundException("El archivo pdf no existe");
+        }
+        byte[] contenido = Files.readAllBytes(pdfFile.toPath());
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "prestamos.pdf");
+        return new ResponseEntity<>(contenido,headers, HttpStatus.OK);
+    }
     
     /*
     //Leer
