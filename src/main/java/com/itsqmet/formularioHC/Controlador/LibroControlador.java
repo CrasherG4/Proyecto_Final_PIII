@@ -76,6 +76,20 @@ public class LibroControlador {
         Libro libroRegistrado = libroServicio.guardarLibro(libro);
         return ResponseEntity.ok(libroRegistrado);
     }
+
+    @GetMapping("/libros/pdf")
+    public ResponseEntity<byte[]> descargarPdf() throws Exception{
+        String rutaPdf = libroServicio.generarPdf();
+        File pdfFile = new File(rutaPdf);
+        if(!pdfFile.exists()){
+            throw new FileNotFoundException("El archivo pdf no existe");
+        }
+        byte[] contenido = Files.readAllBytes(pdfFile.toPath());
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "libros.pdf");
+        return new ResponseEntity<>(contenido,headers, HttpStatus.OK);
+    }
     
     /*
     //LEER
